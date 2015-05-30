@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+
+        <title>Coda Slider v1.0 - a plugin for jQuery</title>
+
+        <!--    META TAGS   -->
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="author"             content="Pablo de la Pe&ntilde;a" />
+        <meta name="robots"             content="index, follow" />
+        <meta name="GOOGLEBOT"          content="index, follow" />
+        <meta name="keywords"           content="jQuery, Coda slier, Coda style slider, slider" />
+        <meta name="description"        content="Coda Slider v1.0 - a plugin for jQuery. a Panic-style slider, ported from the original jQuery For Designers tutorial." />
+
+        <!--    STYLE[S]    -->
+        <link type="text/css" rel="stylesheet" media="screen" href="assets/css/basic.css" />
+        <link type="text/css" rel="stylesheet" media="screen" href="assets/css/theme.css" />
+        <!--[if IE]> <style type="text/css">@import "css/ieoverride.css";</style> <![endif]-->
+
+        <!-- JAVASCRIPT[S] -->
+        <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+        <script type="text/javascript">
+            google.load("jquery", "1.4.2");
+        </script>
+        <script type="text/javascript" src="assets/js/jquery.scrollTo.1.4.2.min.js"></script>
+        <script type="text/javascript" src="assets/js/jquery.serialScroll.min.js"></script>
+        <script type="text/javascript" src="assets/js/jquery.localscroll.min.js"></script>
+        <script type="text/javascript" src="assets/js/jquery.easing.1.3.min.js"></script>
+        <script type="text/javascript" src="assets/js/jquery.codaslider.min.js"></script>
+        <script type="text/javascript">
+        <!--// Hide from old browsers
+            $(function() {
+
+                $('#slider').codaSlider();
+            });
+        //-->
+        </script>
+
+                    <style type="text/css">
+
+            body {
+                margin: 0px;
+                padding: 0;
+                font-family: "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+                font-size: 100%;
+                background: url(assets/img/bg.png) repeat-x #EDEDEC;
+            }
+
+            a:link,
+            a:visited {
+                color:#aa9773;
+                border-bottom:1px dotted #aa9773;
+                text-decoration:none;
+            }
+
+            a:hover {
+                color:#ff9900;
+            }
+
+            div#header {
+                padding:20px;
+                height:120px;
+                border-bottom:1px solid #fff;
+                background:url(assets/img/trans80.png);
+                color:#bbb;
+            }
+
+            h1 {
+                width: 620px;
+                margin:auto;
+                margin-bottom:10px;
+                color:#ff9900;
+            }
+
+            h2{
+                width:620px;
+                margin:auto;
+                margin-bottom:50px;
+                font-size:1.1em;
+            }
+
+            h3 {
+                margin:0px;
+
+            }
+
+            div#helloBlurb {
+                display:block;
+                color:#bbb;
+                font-style:italic;
+                font-size:0.8em;
+            }
+
+
+            code {
+                display:block;
+                font-size:0.9em;
+                padding:5px;
+                background:#eee;
+                border:1px solid #777;
+            }
+
+            pre {
+                margin:0px;
+                padding:0px;
+            }
+
+            #slider {
+              width: 650px;
+              margin-top:0px;
+              top:-26px;
+            }
+
+            .scroll {
+              height: 760px;
+            }
+
+            .scrollContainer div.panel {
+              width: 610px; /* change to 560px if not using JS to remove rh.scroll */
+            }
+
+            table {
+                width:100%;
+                margin-bottom:20px;
+                border-bottom:1px dotted #ccc;
+            }
+
+            table tr td {
+                margin:0px;
+                padding:5px;
+            }
+
+            table tr:nth-child(odd) {
+                background:#eee;
+            }
+
+            table tr:first-child {
+                background:#aaa;
+                font-weight:bold;
+            }
+
+            .jumptodl {
+                font-style: italic;
+                font-size:0.8em;
+                position:absolute;
+                right:20px;
+                top:20px;
+            }
+
+            ul.navigation a {
+                background-color:#ccc;
+                -moz-border-radius-topleft: 5px;
+                -webkit-border-top-left-radius: 5px;
+                -moz-border-radius-topright: 5px;
+                -webkit-border-top-right-radius: 5px;
+            }
+
+        </style>
+    </head>
+    <body>
+
+    <div id="header">
+    <h1>
+    Coda Slider v1.0 - a plugin for jQuery
+    </h1>
+
+    <h2>
+    A Panic style slider for jQuery. Ported from the original <a href="http://jqueryfordesigners.com/coda-slider-effect/">jQuery For Designers tutorial</a>.
+    </h2>
+
+    </div>
+
+    <div id="slider">
+      <ul class="navigation">
+        <li><a href="#hello">Hello</a></li>
+        <li><a href="#usage">Usage</a></li>
+        <li><a href="#options">Options</a></li>
+        <li><a href="#download">Download</a></li>
+        <li><a href="#support">Support</a></li>
+      </ul>
+
+      <!-- element with overflow applied -->
+      <div class="scroll">
+        <!-- the element that will be scrolled during the effect -->
+        <div class="scrollContainer">
+          <!-- our individual panels -->
+          <div class="panel" id="hello">
+
+            <script type="text/javascript">
+            <!--// Hide from old browsers
+
+                $(function() {
+
+                var hellos = new Array();
+                hellos[0] = "English|Hi there!";
+                hellos[1] = "French|Bonjour!";
+                hellos[2] = "Spanish|Hola!";
+                hellos[3] = "American|What's up?";
+                hellos[4] = "Lolspeak|OH HAI!";
+                hellos[5] = "Greek|Γεια!";
+                hellos[6] = "German|Guten Tag";
+
+
+                var hello = hellos[Math.floor(Math.random()*hellos.length)];
+
+                var greeting = hello.split("|");
+                $("h3#hello").html(greeting[1]);
+                if (greeting[0] != 'English')
+                $("div#helloBlurb").html("Now you can say hello in " + greeting[0] + ". Yay!");
+
+                });
+
+            //-->
+            </script>
+
+            <h3 id="hello">Hi there!</h3>
+            <div id="helloBlurb"></div>
+
+
+            <span class="jumptodl">
+                <a href="#download">jump to download! →</a>
+            </span>
+
+            <p>
+            Build an impressive slider with simple markup and minimal fuss.
+            </p>
+
+            <p>
+            On numerous occasions I have had a need (or desire) to reproduce Panic's Coda Slider. I found a very nice tutorial on jQuery For Designers and thought it would be good idea to create a plugin for this.
+            </p>
+
+            <p>
+            To understand the code and how it works please <a href="http://jqueryfordesigners.com/coda-slider-effect/">check out the tutorial</a>, or if you're feeling lazy and just want a quick solution then <a href="#download">download Coda Slider</a>
+            </p>
+
+            <p style="font-style:italic;font-size:0.9em;">
+            Please note: I realise that there are already a bundle of Coda Style plugins out there (I'll admit I found them after finishing this one), this was more an experiment for my own learning than anything else. I'm not intentionaly stepping on people's toes! :)
+            </p>
+
+          </div>
+
+          <div class="panel" id="usage">
+
+            <h3>How to use and abuse this plugin</h3>
+
+            <span class="jumptodl">
+                <a href="#download">jump to download! →</a>
+            </span>
+
+            <p>
+            Include the dependants, plugin and CSS in the document head:
+            </p>
+
+            <code>
+<pre>&lt;link type="text/css" rel="stylesheet" media="screen" href="codaslider.css" /&gt;
+
+&lt;script type="text/javascript" src="jquery.codaslider.1.0.js"&gt;&lt/script&gt;
+&lt;script type="text/javascript" src="jquery.scrollTo.1.4.2.min.js">&lt;/script&gt;
+&lt;script type="text/javascript" src="jquery.serialScroll.min.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="jquery.localscroll.min.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="jquery.easing.1.3.min.js"&gt;&lt;/script&gt;</pre>
+            </code>
+
+            <p>
+            Once the DOM has loaded you can then apply the plugin to the slider markup.
+            </p>
+
+            <code>
+<pre>&lt;script type="text/javascript"&gt;
+&lt;!--// Hide from old browsers
+    $(function() {
+        $('#slider').codaSlider();
+    });
+//--&gt;
+&lt;/script&gt;</pre>
+            </code>
+
+
+            <p>
+            Your HTML should look something like this:
+            </p>
+
+            <code>
+<pre>
+&lt;div id="slider"&gt;
+   &lt;ul class="navigation"&gt;
+      &lt;li&gt;&lt;a href="#panel1"&gt;Tab 1&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href="#panel2"&gt;Tab 2&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href="#panel3"&gt;Tab 3&lt;/a&gt;&lt;/li&gt;
+   &lt;/ul&gt;
+
+   &lt;div class="scroll"&gt;
+      &lt;div class="scrollContainer"&gt;
+         &lt;!-- our individual panels --&gt;
+         &lt;div class="panel" id="panel1"&gt;
+         Panel 1 content
+         &lt;/div&gt;
+
+         &lt;div class="panel" id="panel2"&gt;
+         Panel 2 content
+         &lt;/div&gt;
+
+         &lt;div class="panel" id="panel3"&gt;
+         Panel 3 content
+         &lt;/div&gt;
+      &lt;/div&gt;
+   &lt;/div&gt;
+&lt;/div&gt;
+</pre>
+          </code>
+
+          </div>
+
+          <div class="panel" id="options">
+
+            <h3>Options</h3>
+
+            <span class="jumptodl">
+                <a href="#download">jump to download! →</a>
+            </span>
+
+            <p>
+            Version 1.0 allows for a number of options to be passed to alter the behaviour of the slider:
+            </p>
+
+            <table cellspacing="0">
+
+                <tr>
+                    <td width="100">Option</td>
+                    <td>Behaviour</td>
+                    <td width="100">Defalt</td>
+                </tr>
+
+                <tr>
+                    <td>duration</td>
+                    <td>The speed of the scrolling animation. Can be specified in miliseconds or as 'slow' or 'fast'</td>
+                    <td>500</td>
+                </tr>
+
+                <tr>
+                    <td>easing</td>
+                    <td>This plugin can be used with the <a href="http://gsgd.co.uk/sandbox/jquery/easing/">easing plugin from GSGD</a>. Specify the name of the type of easing required.</td>
+                    <td>swing</td>
+                </tr>
+
+                <tr>
+                    <td>navArrows</td>
+                    <td>Specify whether the left and right arrow buttons are to be displayed.</td>
+                    <td>true</td>
+                </tr>
+
+                <tr>
+                    <td>arrowLeft</td>
+                    <td>Location to get the left arrow image.</td>
+                    <td>assets/img/scroll_left.png</td>
+                </tr>
+
+                <tr>
+                    <td>arrowRight</td>
+                    <td>Location to get the right arrow image.</td>
+                    <td>assets/img/scroll_right.png</td>
+                </tr>
+            </table>
+
+            <p>
+            Here's an example with some options:
+            </p>
+
+            <code>
+<pre>&lt;script type="text/javascript"&gt;
+&lt;!--// Hide from old browsers
+    $(function() {
+        $('#slider').codaSlider({duration:1500, easing:"easeinOutElastic"});
+    });
+//--&gt;
+&lt;/script&gt;</pre>
+            </code>
+          </div>
+
+          <div class="panel" id="download">
+
+            <h3>Download the source</h3>
+
+            <p>
+            Coda Slider is currently at version 1.0 (initial release).
+            </p>
+
+            <ul>
+                <li>
+                    <a href="https://github.com/hellopablo/coda-slider/archive/master.zip">Download</a>
+                </li>
+            </ul>
+
+            <p>
+            I welcome modifications and enhancements to this code; feel free to fork the <a href="http://github.com/hellopablo/coda-slider">Coda Slider repository on Github</a>.
+            </p>
+
+          </div>
+
+          <div class="panel" id="support">
+
+            <span class="jumptodl">
+                <a href="#download">← jump to download!</a>
+            </span>
+
+            <h3>Support</h3>
+
+            <p>
+            If you find a bug in Coda Slider then please post an issue on the <a href="https://github.com/hellopablo/coda-slider/issues">Github</a> page. I actively encourage development on this code so, please, <a href="http://github.com/HelloPablo/Coda-Slider">fork away</a>.
+            </p>
+
+            <p>
+            For any other issue please feel free to send an email to <a href="pablo@hellopablo.co.uk">pablo@hellopablo.co.uk</a> or tweet me <a href="http://twitter.com/hellopablo">@hellopablo</a>. I'll do my best to get back to you if I can.
+            </p>
+
+          </div>
+
+        </div>
+      </div>
+
+      <div id="shade"></div>
+
+    </div>
+
+    </body>
+
+</html>
